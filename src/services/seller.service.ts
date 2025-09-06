@@ -64,6 +64,13 @@ export const updateSellerOngoingJobsCount = async (sellerId: string, ongoingJobs
     ).exec();
 }
 
+export const updateSellerCancelledJobsCount = async (sellerId: string): Promise<void> => {
+    await SellerModel.updateOne(
+        {_id: new mongoose.Types.ObjectId(sellerId)},
+        { $inc: { cancelledJobs: 1, ongoingJobs: -1 } }
+    ).exec();
+}
+
 export const updateSellerCompletedJobsCount = async (data: IOrderMessage): Promise<void> => {
     const { sellerId, ongoingJobs, completedJobs, totalEarnings, recentDelivery } = data;
     await SellerModel.updateOne(

@@ -12,6 +12,7 @@ import * as http from "node:http";
 import {appRoutes} from "./routes";
 import {createConnection} from "./queues/connection";
 import {Channel} from "amqplib";
+import {consumeBuyerDirectMessage, consumeSellerDirectMessage} from "./queues/user.consumer";
 
 const SERVER_PORT = 4003;
 const log: Logger = winstonLogger(`${config.ELASTIC_SEARCH_URL}`, 'Users Server', 'debug');
@@ -80,7 +81,9 @@ function routesMiddleware(app: Application): void {
 }
 
 async function startQueues(): Promise<void> {
-
+    const userChannel: Channel = await createConnection() as Channel;
+    await consumeBuyerDirectMessage(userChannel);
+    await consumeSellerDirectMessage(userChannel);
 }
 
 function startElasticSearch(): void {
