@@ -1,4 +1,4 @@
-import {Router} from "express";
+import express ,{Router} from "express";
 import {currentUsername, email, username} from "../controllers/buyer/get";
 
 const router: Router = express.Router();
