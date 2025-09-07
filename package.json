@@ -31,6 +31,7 @@
         "@types/lodash": "^4.17.20",
         "@types/swagger-jsdoc": "^6.0.4",
         "@types/swagger-ui-express": "^4.1.8",
+        "@types/uuid": "^10.0.0",
         "@typescript-eslint/eslint-plugin": "^8.38.0",
         "@typescript-eslint/parser": "^8.38.0",
         "eslint": "^9.32.0",
@@ -47,6 +48,7 @@
     },
     "dependencies": {
         "@elastic/elasticsearch": "^8.11.0",
+        "@faker-js/faker": "^10.0.0",
         "@kariru-k/gigconnect-shared": "^0.0.20",
         "amqplib": "^0.10.8",
         "bcryptjs": "^3.0.2",
@@ -68,6 +70,7 @@
         "swagger-ui-express": "^5.0.1",
         "typescript": "^5.8.3",
         "typescript-transform-paths": "^3.5.5",
+        "uuid": "^12.0.0",
         "winston": "^3.17.0"
     }
 }
