@@ -28,12 +28,16 @@ export async function consumeBuyerDirectMessage(channel: Channel): Promise<void>
         await channel.assertExchange(exchangeName, 'direct', {durable: true});
         const jobberQueue = await channel.assertQueue(queueName, {durable: true, autoDelete: false});
 
+
+        log.info('Registered consumeBuyerDirectMessage consumer');
+
         await channel.bindQueue(jobberQueue.queue, exchangeName, routingKey);
 
         channel.consume(jobberQueue.queue, async (msg: ConsumeMessage | null) => {
             if (msg) {
+                log.info(`Received message: ${msg.content.toString()}`);
                 const {type} = JSON.parse(msg.content.toString());
-                if (!type) {
+                if (type) {
                     log.info(`✅ Received message of type: ${type}`);
                     if (type === 'auth') {
                         const {
@@ -92,7 +96,7 @@ export async function consumeSellerDirectMessage(channel: Channel): Promise<void
                     count
                 } = JSON.parse(msg.content.toString());
 
-                if (!type) {
+                if (type) {
                     log.info(`✅ Received message of type: ${type}`);
                     // Handle seller messages here
                     if (type === 'create-order') {

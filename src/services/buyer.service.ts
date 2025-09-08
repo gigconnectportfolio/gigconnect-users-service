@@ -1,5 +1,10 @@
-import { IBuyerDocument } from "@kariru-k/gigconnect-shared";
+import {BadRequestError, IBuyerDocument, winstonLogger} from "@kariru-k/gigconnect-shared";
 import {BuyerModel} from "../models/buyer.schema";
+import {Logger} from "winston";
+import {config} from "../config";
+
+const log: Logger = winstonLogger(`${config.ELASTIC_SEARCH_URL}`, 'Users Service Queue Consumer', 'debug');
+
 
 export const getBuyerByEmail = async (email: string): Promise<IBuyerDocument | null> => {
     return await BuyerModel.findOne({email}).exec() as IBuyerDocument;
@@ -16,7 +21,13 @@ export const getRandomBuyers = async (count: number): Promise<IBuyerDocument[]> 
 export const createBuyer = async (buyerData: IBuyerDocument): Promise<void> => {
     const checkIfBuyerExists = await getBuyerByEmail(`${buyerData.email}`);
     if(!checkIfBuyerExists){
-        await BuyerModel.create(buyerData);
+        try {
+            log.info(`Creating buyer with email: ${buyerData.email}`);
+            await BuyerModel.create(buyerData);
+        } catch (error) {
+            log.error(`Error creating buyer with email: ${buyerData.email} - ${error}`);
+            throw new BadRequestError('Error creating buyer', 'Buyer Service createBuyer() method error');
+        }
     }
 }
 

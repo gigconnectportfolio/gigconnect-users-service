@@ -66,5 +66,5 @@ const sellerSchema: Schema = new Schema(
     },
 )
 
-export const SellerModel: Model<ISellerDocument> = model<ISellerDocument>('Buyer', sellerSchema);
+export const SellerModel: Model<ISellerDocument> = model<ISellerDocument>('Seller', sellerSchema);
 
