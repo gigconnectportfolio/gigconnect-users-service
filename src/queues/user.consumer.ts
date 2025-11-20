@@ -26,14 +26,14 @@ export async function consumeBuyerDirectMessage(channel: Channel): Promise<void>
         const queueName = 'user-buyer-queue';
 
         await channel.assertExchange(exchangeName, 'direct', {durable: true});
-        const jobberQueue = await channel.assertQueue(queueName, {durable: true, autoDelete: false});
+        const gigConnectQueue = await channel.assertQueue(queueName, {durable: true, autoDelete: false});
 
 
         log.info('Registered consumeBuyerDirectMessage consumer');
 
-        await channel.bindQueue(jobberQueue.queue, exchangeName, routingKey);
+        await channel.bindQueue(gigConnectQueue.queue, exchangeName, routingKey);
 
-        channel.consume(jobberQueue.queue, async (msg: ConsumeMessage | null) => {
+        channel.consume(gigConnectQueue.queue, async (msg: ConsumeMessage | null) => {
             if (msg) {
                 log.info(`Received message: ${msg.content.toString()}`);
                 const {type} = JSON.parse(msg.content.toString());
@@ -79,11 +79,11 @@ export async function consumeSellerDirectMessage(channel: Channel): Promise<void
         const queueName = 'user-seller-queue';
 
         await channel.assertExchange(exchangeName, 'direct', {durable: true});
-        const jobberQueue = await channel.assertQueue(queueName, {durable: true, autoDelete: false});
+        const gigConnectQueue = await channel.assertQueue(queueName, {durable: true, autoDelete: false});
 
-        await channel.bindQueue(jobberQueue.queue, exchangeName, routingKey);
+        await channel.bindQueue(gigConnectQueue.queue, exchangeName, routingKey);
 
-        channel.consume(jobberQueue.queue, async (msg: ConsumeMessage | null) => {
+        channel.consume(gigConnectQueue.queue, async (msg: ConsumeMessage | null) => {
             if (msg) {
                 const {
                     type,
@@ -132,11 +132,11 @@ export async function consumeReviewFanoutMessages(channel: Channel): Promise<voi
         const queueName = 'seller-review-queue';
 
         await channel.assertExchange(exchangeName, 'fanout', {durable: true});
-        const jobberQueue = await channel.assertQueue(queueName, {durable: true, autoDelete: false});
+        const gigConnectQueue = await channel.assertQueue(queueName, {durable: true, autoDelete: false});
 
-        await channel.bindQueue(jobberQueue.queue, exchangeName, '');
+        await channel.bindQueue(gigConnectQueue.queue, exchangeName, '');
 
-        channel.consume(jobberQueue.queue, async (msg: ConsumeMessage | null) => {
+        channel.consume(gigConnectQueue.queue, async (msg: ConsumeMessage | null) => {
             if (msg) {
                 const {type} = JSON.parse(msg.content.toString());
                 if (type) {
@@ -173,11 +173,11 @@ export async function consumeSeedGigDirectMessages(channel: Channel): Promise<vo
         const routingKey = 'get-sellers';
 
         await channel.assertExchange(exchangeName, 'direct', {durable: true});
-        const jobberQueue = await channel.assertQueue(queueName, {durable: true, autoDelete: false});
+        const gigConnectQueue = await channel.assertQueue(queueName, {durable: true, autoDelete: false});
 
-        await channel.bindQueue(jobberQueue.queue, exchangeName, routingKey);
+        await channel.bindQueue(gigConnectQueue.queue, exchangeName, routingKey);
 
-        channel.consume(jobberQueue.queue, async (msg: ConsumeMessage | null) => {
+        channel.consume(gigConnectQueue.queue, async (msg: ConsumeMessage | null) => {
             if (msg) {
                 const {type} = JSON.parse(msg.content.toString());
                 if (type) {
