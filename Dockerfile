@@ -2,7 +2,7 @@
 ARG NPM_TOKEN
 
 # -------------------------------------------
-FROM node:20-alpine AS build
+FROM node:20-alpine3.19 AS build
 ARG NPM_TOKEN
 ENV NPM_TOKEN_TO_USE=${NPM_TOKEN}
 # -------------------------------------------
@@ -23,10 +23,16 @@ RUN npm ci
 
 COPY src ./src
 COPY nodemon.json ./
+COPY scripts/fix-js-extensions.js ./scripts/fix-js-extensions.js
+
+# Build project (tsc + tsc-alias + tsx scripts)
 RUN npm run build
 
+# Fix relative imports in compiled JS to include .js extensions
+RUN node scripts/fix-js-extensions.js
+
 # -------------------------------------------
-FROM node:20-alpine AS production
+FROM node:20-alpine3.19 AS production
 ARG NPM_TOKEN
 ENV NPM_TOKEN_TO_USE=${NPM_TOKEN}
 # -------------------------------------------
