@@ -1,7 +1,7 @@
-import {NextFunction, Request, Response} from "express";
-import {IBuyerDocument, NotFoundError} from "@kariru-k/gigconnect-shared";
-import {getBuyerByEmail, getBuyerByUsername} from "../../services/buyer.service";
-import {StatusCodes} from "http-status-codes";
+import { NextFunction, Request, Response } from 'express';
+import { IBuyerDocument, NotFoundError } from '@kariru-k/gigconnect-shared';
+import { getBuyerByEmail, getBuyerByUsername } from '../../services/buyer.service';
+import { StatusCodes } from 'http-status-codes';
 
 /**
     This function handles the retrieval of a buyer's information based on their email address. It:
@@ -17,7 +17,7 @@ import {StatusCodes} from "http-status-codes";
  */
 export const email = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-        const buyer: IBuyerDocument | null = await getBuyerByEmail(req.currentUser!.email)
+        const buyer: IBuyerDocument | null = await getBuyerByEmail(req.currentUser!.email);
         if (!buyer) {
             throw new NotFoundError('Buyer not found', 'Buyer email() method error');
         }
@@ -28,7 +28,7 @@ export const email = async (req: Request, res: Response, next: NextFunction): Pr
     } catch (e) {
         next(e);
     }
-}
+};
 
 /**
     This function handles the retrieval of a buyer's information based on their username. It:
@@ -44,7 +44,7 @@ export const email = async (req: Request, res: Response, next: NextFunction): Pr
  */
 export const currentUsername = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-        const buyer: IBuyerDocument | null = await getBuyerByUsername(req.currentUser!.username)
+        const buyer: IBuyerDocument | null = await getBuyerByUsername(req.currentUser!.username);
         if (!buyer) {
             throw new NotFoundError('Buyer not found', 'Buyer currentUsername() method error');
         }
@@ -55,7 +55,7 @@ export const currentUsername = async (req: Request, res: Response, next: NextFun
     } catch (e) {
         next(e);
     }
-}
+};
 
 /**
     This function handles the retrieval of a buyer's information based on their username provided in the request parameters. It:
@@ -71,8 +71,8 @@ export const currentUsername = async (req: Request, res: Response, next: NextFun
  */
 export const username = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-        const {username} = req.params;
-        const buyer: IBuyerDocument | null = await getBuyerByUsername(username)
+        const { username } = req.params;
+        const buyer: IBuyerDocument | null = await getBuyerByUsername(username);
         if (!buyer) {
             throw new NotFoundError('Buyer not found', 'Buyer username() method error');
         }
@@ -83,7 +83,4 @@ export const username = async (req: Request, res: Response, next: NextFunction):
     } catch (e) {
         next(e);
     }
-}
-
-
-
+};

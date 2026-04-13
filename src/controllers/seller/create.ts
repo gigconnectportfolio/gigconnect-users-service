@@ -1,8 +1,8 @@
-import {NextFunction, Request, Response} from "express";
-import {BadRequestError, ISellerDocument} from "@kariru-k/gigconnect-shared";
-import {sellerSchema} from "../../schemes/seller";
-import {createSeller, getSellerByEmail} from "../../services/seller.service";
-import {StatusCodes} from "http-status-codes";
+import { NextFunction, Request, Response } from 'express';
+import { BadRequestError, ISellerDocument } from '@kariru-k/gigconnect-shared';
+import { sellerSchema } from '../../schemes/seller';
+import { createSeller, getSellerByEmail } from '../../services/seller.service';
+import { StatusCodes } from 'http-status-codes';
 
 export const sellerCreate = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
@@ -31,14 +31,13 @@ export const sellerCreate = async (req: Request, res: Response, next: NextFuncti
             experience: req.body.experience,
             education: req.body.education,
             socialLinks: req.body.socialLinks,
-            certificates: req.body.certificates,
+            certificates: req.body.certificates
         };
 
         const createdSeller = await createSeller(seller);
 
         res.status(StatusCodes.CREATED).json({ message: 'Seller created successfully', seller: createdSeller });
-
     } catch (error) {
         next(error);
     }
-}
+};

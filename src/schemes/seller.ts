@@ -1,4 +1,4 @@
-import Joi, {ObjectSchema} from 'joi';
+import Joi, { ObjectSchema } from 'joi';
 
 const sellerSchema: ObjectSchema = Joi.object().keys({
     fullName: Joi.string().required().messages({
@@ -38,9 +38,13 @@ const sellerSchema: ObjectSchema = Joi.object().keys({
         'array.min': 'Please add at least one skill'
     }),
     languages: Joi.array()
-        .items(Joi.object({
-            _id: Joi.string().optional(), language: Joi.string(), level: Joi.string()
-        }))
+        .items(
+            Joi.object({
+                _id: Joi.string().optional(),
+                language: Joi.string(),
+                level: Joi.string()
+            })
+        )
         .required()
         .min(1)
         .messages({
@@ -56,15 +60,17 @@ const sellerSchema: ObjectSchema = Joi.object().keys({
         'number.greater': 'Response time must be greater than zero'
     }),
     experience: Joi.array()
-        .items(Joi.object({
-            _id: Joi.string().optional(),
-            company: Joi.string(),
-            title: Joi.string(),
-            startDate: Joi.string(),
-            endDate: Joi.string(),
-            description: Joi.string(),
-            currentlyWorkingHere: Joi.boolean()
-        }))
+        .items(
+            Joi.object({
+                _id: Joi.string().optional(),
+                company: Joi.string(),
+                title: Joi.string(),
+                startDate: Joi.string(),
+                endDate: Joi.string(),
+                description: Joi.string(),
+                currentlyWorkingHere: Joi.boolean()
+            })
+        )
         .required()
         .min(1)
         .messages({
@@ -74,14 +80,16 @@ const sellerSchema: ObjectSchema = Joi.object().keys({
             'array.min': 'Please add at least one work experience'
         }),
     education: Joi.array()
-        .items(Joi.object({
-            _id: Joi.string().optional(),
-            country: Joi.string(),
-            university: Joi.string(),
-            title: Joi.string(),
-            major: Joi.string(),
-            year: Joi.string()
-        }))
+        .items(
+            Joi.object({
+                _id: Joi.string().optional(),
+                country: Joi.string(),
+                university: Joi.string(),
+                title: Joi.string(),
+                major: Joi.string(),
+                year: Joi.string()
+            })
+        )
         .required()
         .min(1)
         .messages({
@@ -92,18 +100,23 @@ const sellerSchema: ObjectSchema = Joi.object().keys({
         }),
     socialLinks: Joi.array().optional().allow(null, ''),
     certificates: Joi.array()
-        .items(Joi.object({
-            _id: Joi.string().optional(), name: Joi.string(), from: Joi.string(), year: Joi.number()
-        }))
+        .items(
+            Joi.object({
+                _id: Joi.string().optional(),
+                name: Joi.string(),
+                from: Joi.string(),
+                year: Joi.number()
+            })
+        )
         .optional()
         .allow(null, ''),
     ratingsCount: Joi.number().optional(),
     ratingCategories: Joi.object({
-        five: {value: Joi.number(), count: Joi.number()},
-        four: {value: Joi.number(), count: Joi.number()},
-        three: {value: Joi.number(), count: Joi.number()},
-        two: {value: Joi.number(), count: Joi.number()},
-        one: {value: Joi.number(), count: Joi.number()}
+        five: { value: Joi.number(), count: Joi.number() },
+        four: { value: Joi.number(), count: Joi.number() },
+        three: { value: Joi.number(), count: Joi.number() },
+        two: { value: Joi.number(), count: Joi.number() },
+        one: { value: Joi.number(), count: Joi.number() }
     }).optional(),
     ratingSum: Joi.number().optional(),
     recentDelivery: Joi.string().optional().allow(null, ''),
@@ -115,4 +128,4 @@ const sellerSchema: ObjectSchema = Joi.object().keys({
     createdAt: Joi.string().optional()
 });
 
-export {sellerSchema};
+export { sellerSchema };

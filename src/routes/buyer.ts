@@ -1,5 +1,5 @@
-import express ,{Router} from "express";
-import {currentUsername, email, username} from "../controllers/buyer/get";
+import express, { Router } from 'express';
+import { currentUsername, email, username } from '../controllers/buyer/get';
 
 const router: Router = express.Router();
 
@@ -8,4 +8,4 @@ export const buyerRoutes = (): Router => {
     router.get('/email', email);
     router.get('/:username', username);
     return router;
-}
+};

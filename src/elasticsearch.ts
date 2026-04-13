@@ -1,14 +1,13 @@
-import {Client, estypes} from "@elastic/elasticsearch";
-import {config} from "./config";
-import {Logger} from "winston";
-import {winstonLogger} from "@kariru-k/gigconnect-shared";
+import { Client, estypes } from '@elastic/elasticsearch';
+import { config } from './config';
+import { Logger } from 'winston';
+import { winstonLogger } from '@kariru-k/gigconnect-shared';
 
 const log: Logger = winstonLogger(`${config.ELASTIC_SEARCH_URL}`, 'Users ElasticSearch Server', 'debug');
 
 export const elasticSearchClient = new Client({
-    node: `${config.ELASTIC_SEARCH_URL}`,
+    node: `${config.ELASTIC_SEARCH_URL}`
 });
-
 
 /**
     This function checks the connection to the Elasticsearch cluster by querying its health status.
@@ -24,7 +23,7 @@ export async function checkConnection(): Promise<void> {
             log.info(`Users ElasticSearch Server ElasticSearch health status: ${response.status}`);
             isConnected = true;
         } catch (error) {
-            log.error("Failed to connect to ElasticSearch", error);
+            log.error('Failed to connect to ElasticSearch', error);
             log.log('error', 'Users ElasticSearch Server checkConnection() Method', error);
         }
     }

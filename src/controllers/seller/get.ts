@@ -1,11 +1,10 @@
-import {NextFunction, Request, Response} from "express";
-import {ISellerDocument} from "@kariru-k/gigconnect-shared";
-import {getRandomSellers, getSellerById, getSellerByUsername} from "../../services/seller.service";
-import {StatusCodes} from "http-status-codes";
+import { NextFunction, Request, Response } from 'express';
+import { ISellerDocument } from '@kariru-k/gigconnect-shared';
+import { getRandomSellers, getSellerById, getSellerByUsername } from '../../services/seller.service';
+import { StatusCodes } from 'http-status-codes';
 
 export const id = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-
         const seller: ISellerDocument | null = await getSellerById(req.params.sellerId);
         res.status(StatusCodes.OK).json({
             message: 'Seller fetched successfully',
@@ -14,7 +13,7 @@ export const id = async (req: Request, res: Response, next: NextFunction): Promi
     } catch (e) {
         next(e);
     }
-}
+};
 
 export const username = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
@@ -26,7 +25,7 @@ export const username = async (req: Request, res: Response, next: NextFunction):
     } catch (e) {
         next(e);
     }
-}
+};
 
 export const random = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
@@ -38,5 +37,4 @@ export const random = async (req: Request, res: Response, next: NextFunction): P
     } catch (e) {
         next(e);
     }
-}
-
+};
